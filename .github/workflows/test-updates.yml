@@ -2,6 +2,7 @@ name: Build Tests
 
 # No need to run on master branch
 on:
+  workflow_dispatch:
   push:
     branches: ["*", "!master"]
   pull_request:
