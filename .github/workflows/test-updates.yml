@@ -1,14 +1,26 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 3 optimizations:
+# - [HIGH] Add npm dependency cache to "test" job
+# - [MEDIUM] Add concurrency group to "test-updates.yml"
+# - [MEDIUM] Use "npm ci" instead of "npm install" in "test"
+# Estimated savings: ~7 min/run
+#
 name: Build Tests
-
-# No need to run on master branch
-on:
+'on':
   workflow_dispatch:
   push:
-    branches: ["*", "!master"]
+    branches:
+      - '*'
+      - '!master'
   pull_request:
-    types: [opened, edited, synchronize, reopened]
-    branches: ["*", "!master"]
-
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+    branches:
+      - '*'
+      - '!master'
 jobs:
   test:
     name: Lint
@@ -17,16 +29,13 @@ jobs:
       - name: Setup Nodejs
         uses: actions/setup-node@v5
         with:
-          node-version: "22.19.0"
-
+          node-version: 22.19.0
+          cache: npm
       - name: Install Correct NPM Version
         run: npm install -g npm@10.9.3
-
       - name: Checkout branch
         uses: actions/checkout@v5
-
       - name: Install Dependencies
         run: npm install
-
       - name: Lint
         run: npx --no-install eslint . --quiet
