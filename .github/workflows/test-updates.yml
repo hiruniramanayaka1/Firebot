@@ -14,16 +14,17 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout branch
+        uses: actions/checkout@v5
+
       - name: Setup Nodejs
         uses: actions/setup-node@v5
         with:
           node-version: "22.19.0"
+          cache: npm
 
       - name: Install Correct NPM Version
         run: npm install -g npm@10.9.3
-
-      - name: Checkout branch
-        uses: actions/checkout@v5
 
       - name: Install Dependencies
         run: npm install
